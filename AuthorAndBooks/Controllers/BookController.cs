@@ -69,7 +69,7 @@ namespace AuthorAndBooks.Controllers
                     using (var txn = s.BeginTransaction())
                     {
                         var author = s.Query<Author>().FirstOrDefault(a => a.Id == id);
-                        var existingBook = s.Query<Book>().FirstOrDefault(b=>b.Author.Id == id);
+                        var existingBook = s.Query<Book>().FirstOrDefault(b=>b.Id == book.Id);
                         existingBook.Name = book.Name;
                         existingBook.Description = book.Description;
                         existingBook.Genre = book.Genre;
