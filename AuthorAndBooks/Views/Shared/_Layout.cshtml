@@ -1,0 +1,57 @@
+﻿@{ 
+    var first = Page[0];
+    var second = Page[1];
+    var third = Page[2];
+    var fourth = Page[3];
+    var fifth = Page[4];
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_Layout</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="bg-black p-3 mb-5" style="height:40%">
+        <h1 class="text-light display-1 mb-5" style="text-align:center">The Book Store</h1>
+        <h3 class="text-light">Welcome @User.Identity.Name.ToUpper()</h3>
+        <div>
+
+
+            @Html.ActionLink("View Authors and Books", "index", "Author", null, new { @class = "mx-2" })
+
+            @if (User.Identity.IsAuthenticated)
+            {
+
+                @Html.ActionLink("View Books", "ViewBooks", "book", new { id = (Guid)Session["CurrentAuthorId"] }, new { @class = "mx-2 text-start" })
+                @Html.ActionLink("View Author Details", "Viewdetail", "details", new { id = (Guid)Session["CurrentAuthorId"] }, new { @class = "mx-2 text-end" })
+                @Html.ActionLink("Logout", "logout", "author", null, new { @class = "mx-2 text-end", style = "float:right" })
+
+            }
+
+            else
+            {
+                @Html.ActionLink("Login", "login", "author", null, new { @class = "mx-2 text-end" })
+            }
+
+            @RenderSection("Links", required: false)
+
+
+        </div>
+
+    </header>
+    <div class="container" style="height:50%">
+        <div class="col"></div>
+        <div class="col">
+            @RenderBody()
+        </div>
+        <div class="col"></div>
+
+    </div>
+    <footer class="bg-black p-lg-3" style="height:100px; margin-top:50%">
+    </footer>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>

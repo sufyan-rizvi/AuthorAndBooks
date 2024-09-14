@@ -1,0 +1,90 @@
+﻿@model IEnumerable<AuthorAndBooks.Models.Author>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@Html.ActionLink("Add Author", "Create", null, new { @class = "btn btn-primary my-2" })
+
+<table class="table border-black">
+    <thead>
+        <tr>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th scope="col">
+                @Html.DisplayNameFor(model => model.Age)
+            </th>
+
+            <th scope="col">
+                @Html.DisplayName("Book Name")
+            </th>
+            <th scope="col">
+                @Html.DisplayName("Book Genre")
+            </th>
+            <th scope="col">
+                @Html.DisplayName("Book Description")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{var colors = new string[] { "warning", "success" }; }
+        @{ var currentColour = colors[0];}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <th class="bg-@currentColour" scope="row">
+                    @Html.DisplayFor(modelItem => item.Name)
+                </th>
+                <td class="bg-@currentColour">
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td class="bg-@currentColour">
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                @if (item.Books.Count != 0)
+                {
+                    <th class="bg-@currentColour">@Html.DisplayFor(model => item.Books[0].Name)</th>
+                    <th class="bg-@currentColour">@Html.DisplayFor(model => item.Books[0].Genre)</th>
+                    <td class="bg-@currentColour">@Html.DisplayFor(model => item.Books[0].Description)</td>
+                }
+                else
+                {
+                    <td class="bg-@currentColour"></td>
+                    <td class="bg-@currentColour"></td>
+                    <td class="bg-@currentColour"></td>
+                }
+            </tr>
+            for (var i = 1; i < item.Books.Count; i++)
+            {
+                <tr class="bg-@currentColour">
+                    <td class="bg-@currentColour"></td>
+                    <td class="bg-@currentColour"></td>
+                    <td class="bg-@currentColour"></td>
+                    <th class="bg-@currentColour">@Html.DisplayFor(model => item.Books[i].Name)</th>
+                    <th class="bg-@currentColour">@Html.DisplayFor(model => item.Books[i].Genre)</th>
+                    <td class="bg-@currentColour">@Html.DisplayFor(model => item.Books[i].Description)</td>
+                </tr>
+            }
+            currentColour = currentColour == colors[0] ? colors[1] : colors[0];
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Age)
+                </td>
+                <td>
+
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }) |
+                    @Html.ActionLink("View Books", "viewbooks", "book", new { id = item.Id }, null) |
+                    @Html.ActionLink("Author Details", "viewdetail", "details", new { id = item.Id }, null)
+                </td>*@
+
+        }
+    </tbody>
+
+</table>
